@@ -1,0 +1,187 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Día 19 — Proyecto modular en Python\n",
+        "\n",
+        "Hoy voy a estructurar mi proyecto como una aplicación real,\n",
+        "separando el código en módulos.\n",
+        "\n",
+        "Día: 19/100"
+      ],
+      "metadata": {
+        "id": "ifuoQd-NlWMA"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 7,
+      "metadata": {
+        "id": "FFS4CZR8lR-6"
+      },
+      "outputs": [],
+      "source": [
+        "def añadir_tarea(tareas):\n",
+        "    titulo = input(\"Nueva tarea: \").strip()\n",
+        "\n",
+        "    if titulo == \"\":\n",
+        "        print(\"⚠️ La tarea no puede estar vacía\")\n",
+        "        return\n",
+        "\n",
+        "    tarea = {\n",
+        "        \"titulo\": titulo,\n",
+        "        \"completada\": False\n",
+        "    }\n",
+        "\n",
+        "    tareas.append(tarea)\n",
+        "    guardar_tareas(tareas)\n",
+        "\n",
+        "    print(\"✅ Tarea añadida\")\n",
+        "\n",
+        "\n",
+        "def mostrar_tareas(tareas):\n",
+        "    if not tareas:\n",
+        "        print(\"No hay tareas.\")\n",
+        "    else:\n",
+        "        print(\"\\n📋 Lista de tareas:\")\n",
+        "        for i, tarea in enumerate(tareas, start=1):\n",
+        "            estado = \"✅\" if tarea[\"completada\"] else \"❌\"\n",
+        "            print(i, \"-\", tarea[\"titulo\"], estado)\n",
+        "\n",
+        "\n",
+        "def completar_tarea(tareas):\n",
+        "    if not tareas:\n",
+        "        print(\"No hay tareas.\")\n",
+        "        return\n",
+        "\n",
+        "    mostrar_tareas(tareas)\n",
+        "\n",
+        "    numero = pedir_numero(\"Número de tarea: \")\n",
+        "\n",
+        "    if 1 <= numero <= len(tareas):\n",
+        "        tareas[numero - 1][\"completada\"] = True\n",
+        "        guardar_tareas(tareas)\n",
+        "        print(\"✅ Tarea completada\")\n",
+        "    else:\n",
+        "        print(\"Número fuera de rango\")\n",
+        "\n",
+        "\n",
+        "def eliminar_tarea(tareas):\n",
+        "    if not tareas:\n",
+        "        print(\"No hay tareas para eliminar.\")\n",
+        "        return\n",
+        "\n",
+        "    mostrar_tareas(tareas)\n",
+        "\n",
+        "    numero = pedir_numero(\"Número de tarea a eliminar: \")\n",
+        "\n",
+        "    if 1 <= numero <= len(tareas):\n",
+        "        tarea = tareas.pop(numero - 1)\n",
+        "        guardar_tareas(tareas)\n",
+        "        print(\"🗑️ Eliminada:\", tarea[\"titulo\"])\n",
+        "    else:\n",
+        "        print(\"Número fuera de rango\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "main()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ZbygirfPmz42",
+        "outputId": "63cea777-0677-4692-dd8e-4abe6ca68e95"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "===== GESTOR DE TAREAS =====\n",
+            "1. Añadir tarea\n",
+            "2. Mostrar tareas\n",
+            "3. Completar tarea\n",
+            "4. Eliminar tarea\n",
+            "5. Salir\n",
+            "Elige una opción: 1\n",
+            "Nueva tarea: Lección día 19 de pyhton\n",
+            "✅ Tarea añadida\n",
+            "\n",
+            "===== GESTOR DE TAREAS =====\n",
+            "1. Añadir tarea\n",
+            "2. Mostrar tareas\n",
+            "3. Completar tarea\n",
+            "4. Eliminar tarea\n",
+            "5. Salir\n",
+            "Elige una opción: 2\n",
+            "\n",
+            "📋 Lista de tareas:\n",
+            "1 - Lección día 19 de pyhton ❌\n",
+            "\n",
+            "===== GESTOR DE TAREAS =====\n",
+            "1. Añadir tarea\n",
+            "2. Mostrar tareas\n",
+            "3. Completar tarea\n",
+            "4. Eliminar tarea\n",
+            "5. Salir\n",
+            "Elige una opción: 3\n",
+            "\n",
+            "📋 Lista de tareas:\n",
+            "1 - Lección día 19 de pyhton ❌\n",
+            "Número de tarea: 1\n",
+            "✅ Tarea completada\n",
+            "\n",
+            "===== GESTOR DE TAREAS =====\n",
+            "1. Añadir tarea\n",
+            "2. Mostrar tareas\n",
+            "3. Completar tarea\n",
+            "4. Eliminar tarea\n",
+            "5. Salir\n",
+            "Elige una opción: 2\n",
+            "\n",
+            "📋 Lista de tareas:\n",
+            "1 - Lección día 19 de pyhton ✅\n",
+            "\n",
+            "===== GESTOR DE TAREAS =====\n",
+            "1. Añadir tarea\n",
+            "2. Mostrar tareas\n",
+            "3. Completar tarea\n",
+            "4. Eliminar tarea\n",
+            "5. Salir\n",
+            "Elige una opción: 5\n",
+            "👋 Hasta luego\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "XdPhybXym05i"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
